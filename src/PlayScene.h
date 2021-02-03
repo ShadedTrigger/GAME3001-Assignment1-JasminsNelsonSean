@@ -25,6 +25,11 @@ private:
 	// IMGUI Function
 	void GUI_Function() const;
 	std::string m_guiTitle;
+
+	Label* m_pSeekingLabel;
+	Label* m_pFleeingLabel;
+	Label* m_pArrivalLabel;
+	Label* m_pAvoidLabel;
 	
 	glm::vec2 m_mousePosition;
 

@@ -29,6 +29,8 @@ public:
 	void setTurnRate(float rate);
 	float getAccelerationRate() const;
 	void setAccelerationRate(float rate);
+	std::string getState();
+	void setState(std::string state);
 
 private:
 
@@ -39,6 +41,8 @@ private:
 	float m_maxSpeed;
 	float m_turnRate;
 	float m_accelerationRate;
+
+	std::string currentState;
 
 	// private function
 	void m_Move();

@@ -36,21 +36,16 @@ void StartScene::handleEvents()
 	{
 		TheGame::Instance()->quit();
 	}
-
-	if(EventManager::Instance().isKeyDown(SDL_SCANCODE_1))
-	{
-		TheGame::Instance()->changeSceneState(PLAY_SCENE);
-	}
 }
 
 void StartScene::start()
 {
 	const SDL_Color blue = { 0, 0, 255, 255 };
-	m_pNameLabel = new Label("Sean Jasmins-Nelson", "Consolas", 60, blue, glm::vec2(400.0f, 40.0f));
+	m_pNameLabel = new Label("Sean Jasmins-Nelson", "Consolas", 60, blue, glm::vec2(400.0f, 100.0f));
 	m_pNameLabel->setParent(this);
 	addChild(m_pNameLabel);
 
-	m_pStudentNumLabel = new Label("Student Number: 101297706", "Consolas", 40, blue, glm::vec2(400.0f, 120.0f));
+	m_pStudentNumLabel = new Label("Student Number: 101297706", "Consolas", 40, blue, glm::vec2(400.0f, 200.0f));
 	m_pStudentNumLabel->setParent(this);
 	addChild(m_pStudentNumLabel);
 

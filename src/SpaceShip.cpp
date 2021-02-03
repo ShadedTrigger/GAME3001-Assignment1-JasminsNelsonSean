@@ -20,6 +20,7 @@ SpaceShip::SpaceShip()
 	setRotation(0.0f);
 	setAccelerationRate(10.0f);
 	setTurnRate(10.0f);
+	setState("Seek");
 }
 
 SpaceShip::~SpaceShip()
@@ -96,17 +97,36 @@ void SpaceShip::setAccelerationRate(const float rate)
 	m_accelerationRate = rate;
 }
 
+std::string SpaceShip::getState()
+{
+	return currentState;
+}
+
 float SpaceShip::getRotation() const
 {
 	return m_rotationAngle;
+}
+
+void SpaceShip::setState(const std::string state)
+{
+	currentState = state;
 }
 
 void SpaceShip::m_Move()
 {
 	const auto deltaTime = TheGame::Instance()->getDeltaTime();
 
-	// direction with magnitude
-	m_targetDirection = m_destination - getTransform()->position;
+	if (getState() == "Flee")
+	{
+		// direction with magnitude
+		m_targetDirection = -(m_destination - getTransform()->position);
+	}
+	else
+	{
+		// direction with magnitude
+		m_targetDirection = m_destination - getTransform()->position;
+	}
+	
 
 	// normalized direction
 	m_targetDirection = Util::normalize(m_targetDirection);
@@ -133,7 +153,24 @@ void SpaceShip::m_Move()
 	getRigidBody()->velocity += getOrientation() * (deltaTime) + 
 		0.5f * getRigidBody()->acceleration * (deltaTime);
 
-	getRigidBody()->velocity = Util::clamp(getRigidBody()->velocity, m_maxSpeed);
+	// Clamp m_maxSpeed depending on distance to target
+	if (m_destination.x - getTransform()->position.x <= 10.0f && m_destination.y - getTransform()->position.y <= 10.0f && getState() == "Arrival")
+	{
+		m_maxSpeed = Util::clamp(m_maxSpeed, 0.0f, 0.0f);
+		getRigidBody()->velocity = Util::clamp(getRigidBody()->velocity, m_maxSpeed);
+	}
+	else if (m_destination.x - getTransform()->position.x <= 75.0f && m_destination.y - getTransform()->position.y <= 75.0f && getState() == "Arrival")
+	{
+		m_maxSpeed = Util::clamp(m_maxSpeed, 2.0f, 2.0f);
+		getRigidBody()->velocity = Util::clamp(getRigidBody()->velocity, m_maxSpeed);
+	}
+	else if (m_destination.x - getTransform()->position.x <= 150.0f && m_destination.y - getTransform()->position.y <= 150.0f && getState() == "Arrival")
+	{
+		m_maxSpeed = Util::clamp(m_maxSpeed, 4.0f, 4.0f);
+		getRigidBody()->velocity = Util::clamp(getRigidBody()->velocity, m_maxSpeed);
+	}
+	else
+		getRigidBody()->velocity = Util::clamp(getRigidBody()->velocity, m_maxSpeed);
 
 	getTransform()->position += getRigidBody()->velocity;
 }
