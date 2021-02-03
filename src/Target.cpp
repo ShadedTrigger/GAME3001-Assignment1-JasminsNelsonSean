@@ -18,7 +18,7 @@ Target::Target()
 
 	setType(TARGET);
 
-	SoundManager::Instance().load("../Assets/audio/nyoom.ogg", "nyoom", SOUND_SFX);
+	SoundManager::Instance().load("../Assets/audio/nyoom.mp3", "nyoom", SOUND_SFX);
 }
 
 Target::~Target()

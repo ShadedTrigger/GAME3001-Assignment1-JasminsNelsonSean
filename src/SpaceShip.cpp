@@ -1,6 +1,7 @@
 #include "SpaceShip.h""
 #include "Game.h"
 #include "Util.h"
+#include "SoundManager.h"
 
 SpaceShip::SpaceShip()
 {
@@ -21,6 +22,8 @@ SpaceShip::SpaceShip()
 	setAccelerationRate(10.0f);
 	setTurnRate(10.0f);
 	setState("Seek");
+
+	SoundManager::Instance().load("../Assets/audio/byebye.mp3", "byebye", SOUND_SFX);
 }
 
 SpaceShip::~SpaceShip()
@@ -37,6 +40,14 @@ void SpaceShip::draw()
 void SpaceShip::update()
 {
 	m_Move();
+	if (((getTransform()->position.x >= 800 && getTransform()->position.x <= 802)
+		|| (getTransform()->position.y >= 600 && getTransform()->position.y <= 602)
+		|| (getTransform()->position.x <= 0 && getTransform()->position.x >= -2)
+		|| (getTransform()->position.y <= 0 && getTransform()->position.y >= -2))
+		&& getState() == "Flee")
+	{
+		SoundManager::Instance().playSound("byebye", 0, -1);
+	}
 }
 
 void SpaceShip::clean()

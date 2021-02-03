@@ -118,7 +118,7 @@ void PlayScene::start()
 	// Music
 	SoundManager::Instance().load("../Assets/audio/TokyoDrift.ogg", "tokyodrift", SOUND_MUSIC);
 	SoundManager::Instance().playMusic("tokyodrift");
-	SoundManager::Instance().setMusicVolume(32);
+	SoundManager::Instance().setMusicVolume(16);
 
 	m_pSeekingLabel = new Label("Press 1 for Seeking", "Consolas", 20, { 0, 0, 0, 255 }, glm::vec2(400.0f, 20.0f));
 	m_pSeekingLabel->setParent(this);
